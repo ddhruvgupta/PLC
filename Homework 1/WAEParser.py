@@ -45,12 +45,16 @@ def p_wae_7(p):
 
 
 def p_wae_8(p):
-    'wae : LBRACE WITH wae wae wae RBRACE'
+    'wae : LBRACE WITH wae wae RBRACE'
     p[0] = ['with', p[3], p[4]]
 
+def p_wae_9(p):
+    'wae : LBRACE ID NUMBER RBRACE'
+    # print(p[2])
+    p[0] = ['var', p[2],  float(p[3])]
 
 def p_error(p):
-    print("Syntax error in input!")
+    print("Syntax error in input!" + str(p))
 
 
 parser = yacc.yacc()

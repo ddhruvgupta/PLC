@@ -52,6 +52,6 @@ lexer = lex.lex()
 ## Tokenize
 # while True:
 #    tok = lexer.token()
-#    if not tok: 
+#    if not tok:
 #        break      # No more input
 #    print(tok)

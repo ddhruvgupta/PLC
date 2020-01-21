@@ -1,6 +1,26 @@
 from WAEParser import parser
 
 
+def substitute_var(var, exprn):
+    print(exprn)
+    var_name = var[0]
+    var_val = var[1]
+    # if type(var[1] == float):
+    #     var_val = var[1]
+    # else:
+    #     var_val = eval_expression(var[1])
+
+    if exprn[0] == 'id' and exprn[1] == var_name:
+        exprn[0] = 'num'
+        exprn[1] = var_val
+    elif exprn[0] == '+':
+        exprn[1] = substitute_var(var, exprn[1])
+        exprn[2] = substitute_var(var, exprn[2])
+
+    print(exprn)
+    return exprn
+
+
 def eval_expression(tree):
     if tree[0] == 'num':
         return tree[1]
@@ -31,6 +51,16 @@ def eval_expression(tree):
             return eval_expression(tree[2])
         else:
             return eval_expression(tree[3])
+    elif tree[0] == 'with':
+        var = eval_expression(tree[1])
+        # for i in range(0, len(tree[2]) - 1):
+        #     tree[2][1] = substitute_var(var, tree[2][i])
+        tree[2] = substitute_var(var, tree[2])
+        print(tree[2])
+        return eval_expression(tree[2])
+
+    elif tree[0] == 'var':
+        return [tree[1], tree[2]]
 
 
 def read_input():
