@@ -13,17 +13,18 @@ Rule 7     wae -> LBRACE DIV wae wae RBRACE
 Rule 8     wae -> LBRACE IF wae wae wae RBRACE
 Rule 9     wae -> LBRACE WITH wae wae RBRACE
 Rule 10    wae -> LBRACE ID NUMBER RBRACE
+Rule 11    wae -> LBRACE wae wae RBRACE
 
 Terminals, with rules where they appear
 
 DIV                  : 7
 ID                   : 3 10
 IF                   : 8
-LBRACE               : 4 5 6 7 8 9 10
+LBRACE               : 4 5 6 7 8 9 10 11
 MINUS                : 5
 NUMBER               : 2 10
 PLUS                 : 4
-RBRACE               : 4 5 6 7 8 9 10
+RBRACE               : 4 5 6 7 8 9 10 11
 SEMI                 : 1
 TIMES                : 6
 WITH                 : 9
@@ -31,7 +32,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
-wae                  : 1 4 4 5 5 6 6 7 7 8 8 8 9 9
+wae                  : 1 4 4 5 5 6 6 7 7 8 8 8 9 9 11 11
 waeStart             : 0
 
 Parsing method: LALR
@@ -49,6 +50,7 @@ state 0
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
@@ -101,15 +103,29 @@ state 5
     (8) wae -> LBRACE . IF wae wae wae RBRACE
     (9) wae -> LBRACE . WITH wae wae RBRACE
     (10) wae -> LBRACE . ID NUMBER RBRACE
+    (11) wae -> LBRACE . wae wae RBRACE
+    (2) wae -> . NUMBER
+    (3) wae -> . ID
+    (4) wae -> . LBRACE PLUS wae wae RBRACE
+    (5) wae -> . LBRACE MINUS wae wae RBRACE
+    (6) wae -> . LBRACE TIMES wae wae RBRACE
+    (7) wae -> . LBRACE DIV wae wae RBRACE
+    (8) wae -> . LBRACE IF wae wae wae RBRACE
+    (9) wae -> . LBRACE WITH wae wae RBRACE
+    (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     PLUS            shift and go to state 7
-    MINUS           shift and go to state 8
-    TIMES           shift and go to state 9
-    DIV             shift and go to state 10
-    IF              shift and go to state 11
-    WITH            shift and go to state 12
-    ID              shift and go to state 13
+    MINUS           shift and go to state 9
+    TIMES           shift and go to state 10
+    DIV             shift and go to state 11
+    IF              shift and go to state 12
+    WITH            shift and go to state 13
+    ID              shift and go to state 14
+    NUMBER          shift and go to state 3
+    LBRACE          shift and go to state 5
 
+    wae                            shift and go to state 8
 
 state 6
 
@@ -130,14 +146,35 @@ state 7
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 14
+    wae                            shift and go to state 15
 
 state 8
+
+    (11) wae -> LBRACE wae . wae RBRACE
+    (2) wae -> . NUMBER
+    (3) wae -> . ID
+    (4) wae -> . LBRACE PLUS wae wae RBRACE
+    (5) wae -> . LBRACE MINUS wae wae RBRACE
+    (6) wae -> . LBRACE TIMES wae wae RBRACE
+    (7) wae -> . LBRACE DIV wae wae RBRACE
+    (8) wae -> . LBRACE IF wae wae wae RBRACE
+    (9) wae -> . LBRACE WITH wae wae RBRACE
+    (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
+
+    NUMBER          shift and go to state 3
+    ID              shift and go to state 4
+    LBRACE          shift and go to state 5
+
+    wae                            shift and go to state 16
+
+state 9
 
     (5) wae -> LBRACE MINUS . wae wae RBRACE
     (2) wae -> . NUMBER
@@ -149,14 +186,15 @@ state 8
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 15
+    wae                            shift and go to state 17
 
-state 9
+state 10
 
     (6) wae -> LBRACE TIMES . wae wae RBRACE
     (2) wae -> . NUMBER
@@ -168,14 +206,15 @@ state 9
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 16
+    wae                            shift and go to state 18
 
-state 10
+state 11
 
     (7) wae -> LBRACE DIV . wae wae RBRACE
     (2) wae -> . NUMBER
@@ -187,14 +226,15 @@ state 10
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 17
+    wae                            shift and go to state 19
 
-state 11
+state 12
 
     (8) wae -> LBRACE IF . wae wae wae RBRACE
     (2) wae -> . NUMBER
@@ -206,14 +246,15 @@ state 11
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 18
+    wae                            shift and go to state 20
 
-state 12
+state 13
 
     (9) wae -> LBRACE WITH . wae wae RBRACE
     (2) wae -> . NUMBER
@@ -225,21 +266,28 @@ state 12
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 19
-
-state 13
-
-    (10) wae -> LBRACE ID . NUMBER RBRACE
-
-    NUMBER          shift and go to state 20
-
+    wae                            shift and go to state 21
 
 state 14
+
+    (10) wae -> LBRACE ID . NUMBER RBRACE
+    (3) wae -> ID .
+
+  ! shift/reduce conflict for NUMBER resolved as shift
+    NUMBER          shift and go to state 22
+    ID              reduce using rule 3 (wae -> ID .)
+    LBRACE          reduce using rule 3 (wae -> ID .)
+
+  ! NUMBER          [ reduce using rule 3 (wae -> ID .) ]
+
+
+state 15
 
     (4) wae -> LBRACE PLUS wae . wae RBRACE
     (2) wae -> . NUMBER
@@ -251,14 +299,22 @@ state 14
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 21
+    wae                            shift and go to state 23
 
-state 15
+state 16
+
+    (11) wae -> LBRACE wae wae . RBRACE
+
+    RBRACE          shift and go to state 24
+
+
+state 17
 
     (5) wae -> LBRACE MINUS wae . wae RBRACE
     (2) wae -> . NUMBER
@@ -270,14 +326,15 @@ state 15
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 22
+    wae                            shift and go to state 25
 
-state 16
+state 18
 
     (6) wae -> LBRACE TIMES wae . wae RBRACE
     (2) wae -> . NUMBER
@@ -289,14 +346,15 @@ state 16
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 23
+    wae                            shift and go to state 26
 
-state 17
+state 19
 
     (7) wae -> LBRACE DIV wae . wae RBRACE
     (2) wae -> . NUMBER
@@ -308,14 +366,15 @@ state 17
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 24
+    wae                            shift and go to state 27
 
-state 18
+state 20
 
     (8) wae -> LBRACE IF wae . wae wae RBRACE
     (2) wae -> . NUMBER
@@ -327,14 +386,15 @@ state 18
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 25
+    wae                            shift and go to state 28
 
-state 19
+state 21
 
     (9) wae -> LBRACE WITH wae . wae RBRACE
     (2) wae -> . NUMBER
@@ -346,49 +406,61 @@ state 19
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 26
-
-state 20
-
-    (10) wae -> LBRACE ID NUMBER . RBRACE
-
-    RBRACE          shift and go to state 27
-
-
-state 21
-
-    (4) wae -> LBRACE PLUS wae wae . RBRACE
-
-    RBRACE          shift and go to state 28
-
+    wae                            shift and go to state 29
 
 state 22
 
-    (5) wae -> LBRACE MINUS wae wae . RBRACE
-
-    RBRACE          shift and go to state 29
-
-
-state 23
-
-    (6) wae -> LBRACE TIMES wae wae . RBRACE
+    (10) wae -> LBRACE ID NUMBER . RBRACE
 
     RBRACE          shift and go to state 30
 
 
-state 24
+state 23
 
-    (7) wae -> LBRACE DIV wae wae . RBRACE
+    (4) wae -> LBRACE PLUS wae wae . RBRACE
 
     RBRACE          shift and go to state 31
 
 
+state 24
+
+    (11) wae -> LBRACE wae wae RBRACE .
+
+    SEMI            reduce using rule 11 (wae -> LBRACE wae wae RBRACE .)
+    NUMBER          reduce using rule 11 (wae -> LBRACE wae wae RBRACE .)
+    ID              reduce using rule 11 (wae -> LBRACE wae wae RBRACE .)
+    LBRACE          reduce using rule 11 (wae -> LBRACE wae wae RBRACE .)
+    RBRACE          reduce using rule 11 (wae -> LBRACE wae wae RBRACE .)
+
+
 state 25
+
+    (5) wae -> LBRACE MINUS wae wae . RBRACE
+
+    RBRACE          shift and go to state 32
+
+
+state 26
+
+    (6) wae -> LBRACE TIMES wae wae . RBRACE
+
+    RBRACE          shift and go to state 33
+
+
+state 27
+
+    (7) wae -> LBRACE DIV wae wae . RBRACE
+
+    RBRACE          shift and go to state 34
+
+
+state 28
 
     (8) wae -> LBRACE IF wae wae . wae RBRACE
     (2) wae -> . NUMBER
@@ -400,21 +472,22 @@ state 25
     (8) wae -> . LBRACE IF wae wae wae RBRACE
     (9) wae -> . LBRACE WITH wae wae RBRACE
     (10) wae -> . LBRACE ID NUMBER RBRACE
+    (11) wae -> . LBRACE wae wae RBRACE
 
     NUMBER          shift and go to state 3
     ID              shift and go to state 4
     LBRACE          shift and go to state 5
 
-    wae                            shift and go to state 32
+    wae                            shift and go to state 35
 
-state 26
+state 29
 
     (9) wae -> LBRACE WITH wae wae . RBRACE
 
-    RBRACE          shift and go to state 33
+    RBRACE          shift and go to state 36
 
 
-state 27
+state 30
 
     (10) wae -> LBRACE ID NUMBER RBRACE .
 
@@ -425,7 +498,7 @@ state 27
     RBRACE          reduce using rule 10 (wae -> LBRACE ID NUMBER RBRACE .)
 
 
-state 28
+state 31
 
     (4) wae -> LBRACE PLUS wae wae RBRACE .
 
@@ -436,7 +509,7 @@ state 28
     RBRACE          reduce using rule 4 (wae -> LBRACE PLUS wae wae RBRACE .)
 
 
-state 29
+state 32
 
     (5) wae -> LBRACE MINUS wae wae RBRACE .
 
@@ -447,7 +520,7 @@ state 29
     RBRACE          reduce using rule 5 (wae -> LBRACE MINUS wae wae RBRACE .)
 
 
-state 30
+state 33
 
     (6) wae -> LBRACE TIMES wae wae RBRACE .
 
@@ -458,7 +531,7 @@ state 30
     RBRACE          reduce using rule 6 (wae -> LBRACE TIMES wae wae RBRACE .)
 
 
-state 31
+state 34
 
     (7) wae -> LBRACE DIV wae wae RBRACE .
 
@@ -469,14 +542,14 @@ state 31
     RBRACE          reduce using rule 7 (wae -> LBRACE DIV wae wae RBRACE .)
 
 
-state 32
+state 35
 
     (8) wae -> LBRACE IF wae wae wae . RBRACE
 
-    RBRACE          shift and go to state 34
+    RBRACE          shift and go to state 37
 
 
-state 33
+state 36
 
     (9) wae -> LBRACE WITH wae wae RBRACE .
 
@@ -487,7 +560,7 @@ state 33
     RBRACE          reduce using rule 9 (wae -> LBRACE WITH wae wae RBRACE .)
 
 
-state 34
+state 37
 
     (8) wae -> LBRACE IF wae wae wae RBRACE .
 
@@ -497,3 +570,7 @@ state 34
     LBRACE          reduce using rule 8 (wae -> LBRACE IF wae wae wae RBRACE .)
     RBRACE          reduce using rule 8 (wae -> LBRACE IF wae wae wae RBRACE .)
 
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for NUMBER in state 14 resolved as shift
