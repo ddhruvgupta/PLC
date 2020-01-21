@@ -2,7 +2,7 @@ from WAEParser import parser
 
 
 def substitute_var(var, exprn):
-    print(exprn)
+    # print(exprn)
     var_name = var[0]
     var_val = var[1]
     # if type(var[1] == float):
@@ -13,7 +13,7 @@ def substitute_var(var, exprn):
     if exprn[0] == 'id' and exprn[1] == var_name:
         exprn[0] = 'num'
         exprn[1] = var_val
-    elif exprn[0] == '+':
+    elif exprn[0] == '+'or exprn[0] == 'with':
         exprn[1] = substitute_var(var, exprn[1])
         exprn[2] = substitute_var(var, exprn[2])
 
@@ -55,7 +55,8 @@ def eval_expression(tree):
         var = eval_expression(tree[1])
         # for i in range(0, len(tree[2]) - 1):
         #     tree[2][1] = substitute_var(var, tree[2][i])
-        tree[2] = substitute_var(var, tree[2])
+        exprn = tree[2]
+        tree[2] = substitute_var(var, exprn)
         print(tree[2])
         return eval_expression(tree[2])
 
