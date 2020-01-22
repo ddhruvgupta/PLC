@@ -53,19 +53,12 @@ def p_wae_8(p):
 def p_wae_9(p):
     'wae : LBRACE ID NUMBER RBRACE'
     # print(p[2])
-    p[0] = ['var', p[2], float(p[3])]
+    p[0] = [p[2], float(p[3])]
 
 
 def p_wae_10(p):
-    'wae : LBRACE wae wae RBRACE'
-    # print(p[2])
-    p[0] = ['var2', p[2], p[3]]
-
-
-def p_wae_11(p):
-    'wae : LBRACE wae wae wae RBRACE'
-    # print(p[2])
-    p[0] = [p[1], p[2], p[3]]
+    'wae : LBRACE ID wae RBRACE'
+    p[0] = [p[2], p[3]]
 
 
 def p_error(p):

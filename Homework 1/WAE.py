@@ -1,21 +1,22 @@
 from WAEParser import parser
+import re
 
 
-def substitute_var(var, exprn):
+def substitute_var(var_name, var_value, exprn):
     # print(exprn)
-    var_name = var[0]
-    # var_val = var[1]
-    if type(var[1] == float):
-        var_val = var[1]
-    else:
-        var_val = eval_expression(var[1])
+    # var_name = var[1][0]
+    # # var_val = var[1]
+    # if type(var[1] == float):
+    #     var_val = var[1][1]
+    # else:
+    #     var_val = eval_expression(var[1])
 
     if exprn[0] == 'id' and exprn[1] == var_name:
         exprn[0] = 'num'
-        exprn[1] = var_val
+        exprn[1] = var_value
     elif exprn[0] == '+' or exprn[0] == '-' or exprn[0] == '*' or exprn[0] == '/' or exprn[0] == 'with':
-        exprn[1] = substitute_var(var, exprn[1])
-        exprn[2] = substitute_var(var, exprn[2])
+        exprn[1] = substitute_var(var_name, var_value, exprn[1])
+        exprn[2] = substitute_var(var_name, var_value, exprn[2])
 
     print(exprn)
     return exprn
@@ -52,24 +53,31 @@ def eval_expression(tree):
         else:
             return eval_expression(tree[3])
     elif tree[0] == 'with':
-        tree[1] = eval_expression(tree[1])
+        var_name, var_value = eval_expression(tree[1])
         # print(var)
         # for i in range(0, len(tree[2]) - 1):
         #     tree[2][1] = substitute_var(var, tree[2][i])
         exprn = tree[2]
-        tree[2] = substitute_var(tree[1], exprn)
+        tree[2] = substitute_var(var_name, var_value, exprn)
         print(tree[2])
         return eval_expression(tree[2])
 
-    elif tree[0] == 'var':
-        return [tree[1], tree[2]]
+    # elif tree[0] == 'var2':
+    #     v = eval_expression(tree[2])
+    #     return [tree[1][1], v]
+    # return eval_expression([tree[0]])
+    # return ['with', ['num', v], tree[3]]
 
-    elif tree[0] == 'var2':
-        v = eval_expression(tree[2])
-        return [tree[1][1], v]
-        # return eval_expression([tree[0]])
-        # return ['with', ['num', v], tree[3]]
+    elif re.match(r"[a-zA-Z]*", tree[0]):
+        if type(tree[1]) == float:
+            return tree[0], tree[1]
+        else:
+            val = eval_expression(tree[1])
+            # print(tree[0], val)
+            return [tree[0], val]
 
+
+        # return [tree[0], tree[1]]
 
 
 def read_input():
