@@ -2,23 +2,14 @@ from WAEParser import parser
 import re
 
 
-def substitute_var(var_name, var_value, exprn):
-    # print(exprn)
-    # var_name = var[1][0]
-    # # var_val = var[1]
-    # if type(var[1] == float):
-    #     var_val = var[1][1]
-    # else:
-    #     var_val = eval_expression(var[1])
-
-    if exprn[0] == 'id' and exprn[1] == var_name:
+def substitute_var(var_map, exprn):
+    if exprn[0] == 'id':
         exprn[0] = 'num'
-        exprn[1] = var_value
+        exprn[1] = var_map.get(exprn[1])
     elif exprn[0] == '+' or exprn[0] == '-' or exprn[0] == '*' or exprn[0] == '/' or exprn[0] == 'with':
-        exprn[1] = substitute_var(var_name, var_value, exprn[1])
-        exprn[2] = substitute_var(var_name, var_value, exprn[2])
+        exprn[1] = substitute_var(var_map, exprn[1])
+        exprn[2] = substitute_var(var_map, exprn[2])
 
-    print(exprn)
     return exprn
 
 
@@ -52,30 +43,39 @@ def eval_expression(tree):
             return eval_expression(tree[2])
         else:
             return eval_expression(tree[3])
+
     elif tree[0] == 'with':
-        var_name, var_value = eval_expression(tree[1])
-        # print(var)
-        # for i in range(0, len(tree[2]) - 1):
-        #     tree[2][1] = substitute_var(var, tree[2][i])
+        var_map = dict()
+        try:
+            var_map = eval_expression(tree[1])
+        except:
+            print(var_map)
+            print("Exit")
+
         exprn = tree[2]
-        tree[2] = substitute_var(var_name, var_value, exprn)
+        tree[2] = substitute_var(var_map, exprn)
         print(tree[2])
         return eval_expression(tree[2])
 
-    # elif tree[0] == 'var2':
-    #     v = eval_expression(tree[2])
-    #     return [tree[1][1], v]
-    # return eval_expression([tree[0]])
-    # return ['with', ['num', v], tree[3]]
+    elif tree[0] == 'var_list':
+        soln = dict()
+        a = tree[1]
+        while isinstance(a, list):
+            soln[a[0][0]] = a[0][1]
+            try:
+                a = a[1]
+            except:
+                a = 1
+
+        return soln
 
     elif re.match(r"[a-zA-Z]*", tree[0]):
         if type(tree[1]) == float:
-            return tree[0], tree[1]
+            return {tree[0]: tree[1]}
         else:
             val = eval_expression(tree[1])
             # print(tree[0], val)
-            return [tree[0], val]
-
+            return {tree[0]: val}
 
         # return [tree[0], tree[1]]
 

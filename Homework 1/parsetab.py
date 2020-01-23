@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'DIV ID IF LBRACE MINUS NUMBER PLUS RBRACE SEMI TIMES WITHwaeStart : wae SEMIwae : NUMBERwae : IDwae : LBRACE PLUS wae wae RBRACEwae : LBRACE MINUS wae wae RBRACEwae : LBRACE TIMES wae wae RBRACEwae : LBRACE DIV wae wae RBRACEwae : LBRACE IF wae wae wae RBRACEwae : LBRACE WITH wae wae RBRACEwae : LBRACE ID NUMBER RBRACEwae : LBRACE ID wae RBRACE'
+_lr_signature = 'DIV ID IF LBRACE MINUS NUMBER PLUS RBRACE SEMI TIMES WITHwaeStart : wae SEMIwae : NUMBERwae : IDwae : LBRACE PLUS wae wae RBRACEwae : LBRACE MINUS wae wae RBRACEwae : LBRACE TIMES wae wae RBRACEwae : LBRACE DIV wae wae RBRACEwae : LBRACE IF wae wae wae RBRACEwae : LBRACE WITH var wae RBRACEvar : LBRACE ID NUMBER RBRACEwae : LBRACE ID wae RBRACEwae : LBRACE WITH wae wae RBRACEvar_list : LBRACE vlist RBRACEvlist : var\n             | var vlist wae : LBRACE WITH var_list wae RBRACE'
     
-_lr_action_items = {'NUMBER':([0,3,4,7,8,9,10,11,12,13,14,15,16,17,18,19,26,28,29,30,31,32,33,35,36,],[3,-2,-3,3,3,3,3,3,3,20,3,3,3,3,3,3,3,-10,-11,-4,-5,-6,-7,-9,-8,]),'ID':([0,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,26,28,29,30,31,32,33,35,36,],[4,-2,-3,13,4,4,4,4,4,4,4,4,4,4,4,4,4,4,-10,-11,-4,-5,-6,-7,-9,-8,]),'LBRACE':([0,3,4,7,8,9,10,11,12,13,14,15,16,17,18,19,26,28,29,30,31,32,33,35,36,],[5,-2,-3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,-10,-11,-4,-5,-6,-7,-9,-8,]),'$end':([1,6,],[0,-1,]),'SEMI':([2,3,4,28,29,30,31,32,33,35,36,],[6,-2,-3,-10,-11,-4,-5,-6,-7,-9,-8,]),'RBRACE':([3,4,20,21,22,23,24,25,27,28,29,30,31,32,33,34,35,36,],[-2,-3,28,29,30,31,32,33,35,-10,-11,-4,-5,-6,-7,36,-9,-8,]),'PLUS':([5,],[7,]),'MINUS':([5,],[8,]),'TIMES':([5,],[9,]),'DIV':([5,],[10,]),'IF':([5,],[11,]),'WITH':([5,],[12,]),}
+_lr_action_items = {'NUMBER':([0,3,4,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,28,30,36,37,38,39,40,42,45,46,47,48,49,51,],[3,-2,-3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,43,-11,-4,-5,-6,-7,50,-13,-9,-12,-16,-8,-10,]),'ID':([0,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,28,29,30,36,37,38,39,40,45,46,47,48,49,51,],[4,-2,-3,13,4,4,4,4,4,4,4,4,4,4,4,4,30,4,4,4,4,42,4,-11,-4,-5,-6,-7,-13,-9,-12,-16,-8,-10,]),'LBRACE':([0,3,4,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,28,30,31,36,37,38,39,40,45,46,47,48,49,51,],[5,-2,-3,5,5,5,5,5,19,5,5,5,5,5,5,29,5,5,5,5,5,29,-11,-4,-5,-6,-7,-13,-9,-12,-16,-8,-10,]),'$end':([1,6,],[0,-1,]),'SEMI':([2,3,4,36,37,38,39,40,46,47,48,49,],[6,-2,-3,-11,-4,-5,-6,-7,-9,-12,-16,-8,]),'RBRACE':([3,4,23,24,25,26,27,31,32,33,34,35,36,37,38,39,40,41,43,44,46,47,48,49,50,51,],[-2,-3,36,37,38,39,40,-14,45,46,47,48,-11,-4,-5,-6,-7,49,51,-15,-9,-12,-16,-8,51,-10,]),'PLUS':([5,19,],[7,7,]),'MINUS':([5,19,],[8,8,]),'TIMES':([5,19,],[9,9,]),'DIV':([5,19,],[10,10,]),'IF':([5,19,],[11,11,]),'WITH':([5,19,],[12,12,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'waeStart':([0,],[1,]),'wae':([0,7,8,9,10,11,12,13,14,15,16,17,18,19,26,],[2,14,15,16,17,18,19,21,22,23,24,25,26,27,34,]),}
+_lr_goto_items = {'waeStart':([0,],[1,]),'wae':([0,7,8,9,10,11,12,13,14,15,16,17,18,20,21,22,28,30,],[2,14,15,16,17,18,21,23,24,25,26,27,28,33,34,35,41,23,]),'var':([12,19,31,],[20,31,31,]),'var_list':([12,],[22,]),'vlist':([19,31,],[32,44,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -35,7 +35,12 @@ _lr_productions = [
   ('wae -> LBRACE TIMES wae wae RBRACE','wae',5,'p_wae_5','WAEParser.py',34),
   ('wae -> LBRACE DIV wae wae RBRACE','wae',5,'p_wae_6','WAEParser.py',39),
   ('wae -> LBRACE IF wae wae wae RBRACE','wae',6,'p_wae_7','WAEParser.py',44),
-  ('wae -> LBRACE WITH wae wae RBRACE','wae',5,'p_wae_8','WAEParser.py',49),
-  ('wae -> LBRACE ID NUMBER RBRACE','wae',4,'p_wae_9','WAEParser.py',54),
-  ('wae -> LBRACE ID wae RBRACE','wae',4,'p_wae_10','WAEParser.py',60),
+  ('wae -> LBRACE WITH var wae RBRACE','wae',5,'p_wae_8','WAEParser.py',50),
+  ('var -> LBRACE ID NUMBER RBRACE','var',4,'p_wae_9','WAEParser.py',56),
+  ('wae -> LBRACE ID wae RBRACE','wae',4,'p_wae_10','WAEParser.py',63),
+  ('wae -> LBRACE WITH wae wae RBRACE','wae',5,'p_wae_11','WAEParser.py',78),
+  ('var_list -> LBRACE vlist RBRACE','var_list',3,'p_wae_12','WAEParser.py',83),
+  ('vlist -> var','vlist',1,'p_wae_13','WAEParser.py',89),
+  ('vlist -> var vlist','vlist',2,'p_wae_13','WAEParser.py',90),
+  ('wae -> LBRACE WITH var_list wae RBRACE','wae',5,'p_wae_14','WAEParser.py',101),
 ]
