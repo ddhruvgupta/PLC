@@ -3,11 +3,17 @@ import re
 
 
 def substitute_var(var_map, exprn):
-    if exprn[0] == 'id':
+    if exprn[0] == 'id' and exprn[1] in var_map:
         exprn[0] = 'num'
         exprn[1] = var_map.get(exprn[1])
-    elif exprn[0] == '+' or exprn[0] == '-' or exprn[0] == '*' or exprn[0] == '/' or exprn[0] == 'with':
+    elif exprn[0] == '+' or exprn[0] == '-' or exprn[0] == '*' or exprn[0] == '/':
         exprn[1] = substitute_var(var_map, exprn[1])
+        exprn[2] = substitute_var(var_map, exprn[2])
+    elif exprn[0] == 'with':
+        # var_map2 = var_map
+        # var_map2.update(eval_expression(exprn[1]))
+        var_map2 = eval_expression(exprn[1])
+        exprn[2] = substitute_var(var_map2, exprn[2])
         exprn[2] = substitute_var(var_map, exprn[2])
 
     return exprn
@@ -45,13 +51,11 @@ def eval_expression(tree):
             return eval_expression(tree[3])
 
     elif tree[0] == 'with':
-        var_map = dict()
-        try:
-            var_map = eval_expression(tree[1])
-        except:
-            print(var_map)
-            print("Exit")
 
+        var_map = eval_expression(tree[1])
+        # if var_map == 'ERROR':
+        #     return var_map        # if var_map == 'ERROR':
+        #     return var_map
         exprn = tree[2]
         tree[2] = substitute_var(var_map, exprn)
         print(tree[2])
@@ -61,13 +65,17 @@ def eval_expression(tree):
         soln = dict()
         a = tree[1]
         while isinstance(a, list):
+            # if soln.get(a[0][0]) is not None:
+            #     print("Semantic ERROR")
+            #     return 'ERROR'
             soln[a[0][0]] = a[0][1]
             try:
                 a = a[1]
             except:
                 a = 1
 
-        return soln
+            return soln
+
 
     elif re.match(r"[a-zA-Z]*", tree[0]):
         if type(tree[1]) == float:
@@ -78,6 +86,9 @@ def eval_expression(tree):
             return {tree[0]: val}
 
         # return [tree[0], tree[1]]
+
+    # elif tree[0] == 'ERROR':
+    #     return 'ERROR'
 
 
 def read_input():
