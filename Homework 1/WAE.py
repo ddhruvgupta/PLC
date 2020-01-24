@@ -53,21 +53,18 @@ def eval_expression(tree):
     elif tree[0] == 'with':
 
         var_map = eval_expression(tree[1])
-        # if var_map == 'ERROR':
-        #     return var_map        # if var_map == 'ERROR':
-        #     return var_map
         exprn = tree[2]
         tree[2] = substitute_var(var_map, exprn)
-        print(tree[2])
+        # print(tree[2])
         return eval_expression(tree[2])
 
     elif tree[0] == 'var_list':
         soln = dict()
         a = tree[1]
         while isinstance(a, list):
-            # if soln.get(a[0][0]) is not None:
-            #     print("Semantic ERROR")
-            #     return 'ERROR'
+            if soln.get(a[0][0]) is not None:
+                print("Semantic ERROR")
+                return 'ERROR'
             soln[a[0][0]] = a[0][1]
             try:
                 a = a[1]
@@ -87,8 +84,8 @@ def eval_expression(tree):
 
         # return [tree[0], tree[1]]
 
-    # elif tree[0] == 'ERROR':
-    #     return 'ERROR'
+    elif tree[0] == 'ERROR':
+        return 'ERROR'
 
 
 def read_input():
@@ -114,7 +111,7 @@ def main():
         except Exception as inst:
             print(inst.args[0])
             continue
-        print(tree)
+        # print(tree)
         try:
             answer = eval_expression(tree)
             if answer == 'ERROR':
