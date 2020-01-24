@@ -74,7 +74,7 @@ def eval_expression(tree):
             except:
                 a = 1
 
-            return soln
+        return soln
 
 
     elif re.match(r"[a-zA-Z]*", tree[0]):
