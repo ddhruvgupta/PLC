@@ -1,64 +1,54 @@
 import ply.yacc as yacc
-from WAELexer import tokens
+from LambdaLexer import tokens
 
 
-def p_ramStart(p):
-    'ramStart : ram'
+def p_exprStart(p):
+    'exprStart : expr SEMI'
     p[0] = p[1]
 
 
-def p_ram_1(p):
-    'ram : NUMBER'
-    print(p[1])
+def p_exprStart2(p):
+    'exprStart : expr LBRACKET NAME EQUALS expr RBRACKET SEMI'
+    p[0] = ['substitute', p[1], p[3].upper(), p[5]]
+
+
+def p_exprStart3(p):
+    'exprStart : FV LBRACKET expr RBRACKET SEMI'
+    p[0] = ['FV', p[3]]
+
+
+def p_exprStart4(p):
+    'exprStart : ALPHA LBRACKET expr COMMA NAME RBRACKET SEMI'
+    p[0] = ['ALPHA', p[3], p[5].upper()]
+
+
+def p_expr_1(p):
+    'expr : NUMBER'
     p[0] = ['num', float(p[1])]
 
 
-def p_ram_2(p):
-    'ram : REG'
-    p[0] = ['REG', p[1].upper()]
+def p_expr_2(p):
+    'expr : NAME'
+    p[0] = ['NAME', p[1].upper()]
 
 
-def p_ram_3(p):
-    'ram : REG EQUALS NUMBER'
-    p[0] = ['=', p[1].upper(), p[3]]
+def p_expr_3(p):
+    'expr : LPAREN expr expr RPAREN'
+    p[0] = ['APPLY', p[2], p[3]]
 
 
-def p_ram_4(p):
-    'ram : INC REG'
-    p[0] = ['INC', p[2].upper()]
+def p_expr_4(p):
+    'expr : LPAREN LAMBDA NAME expr RPAREN'
+    p[0] = ['LAMBDA', p[3].upper(), p[4]]
 
 
-def p_ram_5(p):
-    'ram : DEC REG'
-    p[0] = ['DEC', p[2].upper()]
-
-
-def p_ram_6(p):
-    'ram : REG ram'
-    p[0] = ['IF', p[1].upper(), p[2]]
-
-
-def p_ram_7(p):
-    'ram : JMP LABEL'
-    p[0] = ['JMP', p[2].upper().strip('AB')]
-
-
-def p_ram_8(p):
-    'ram : LABEL ram'
-    p[0] = [p[1].upper().strip('AB'), p[2]]
-
-
-def p_ram_9(p):
-    'ram : MOV REG COMMA REG'
-    p[0] = ['MOV', p[2].upper(), p[4].upper()]
-
-
-def p_ram_10(p):
-    'ram : CONTINUE'
-    p[0] = ['CON']
+def p_expr_5(p):
+    'expr : LPAREN OP expr expr RPAREN'
+    p[0] = [p[2], p[3], p[4]]
 
 
 def p_error(p):
+    print(p)
     print("Syntax error in input!")
 
 
