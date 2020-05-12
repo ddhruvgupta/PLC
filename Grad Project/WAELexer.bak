@@ -1,0 +1,66 @@
+import ply.lex as lex
+
+# reserved = {'if': 'IF', 'with': 'WITH'}
+tokens = ['NUMBER', 'LPAREN', 'RPAREN', 'LBRACKET', 'RBRACKET', 'EQUALS', 'FV', 'ALPHA' ,'OP', 'LAMBDA', 'NAME', 'SEMI', 'COMMA']
+
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_RBRACKET = r'\]'
+t_LBRACKET = r'\['
+t_EQUALS = r'='
+t_FV = r'[Ff][Vv]'
+t_ALPHA = r'[Aa][Ll][Pp][Hh][Aa]'
+t_COMMA = r'\,'
+t_OP = r'\+|\-|\*|\/'
+t_LAMBDA = r'[Ll][Aa][Mm][Bb][Dd][Aa]'
+t_NAME = r'[a-zA-z][0-9]*'
+t_SEMI = r';'
+
+
+def t_NUMBER(t):
+    r'[0-9]+'
+    t.value = float(t.value)
+    t.type = 'NUMBER'
+    return t
+
+# def t_LAMBDA(t):
+#     r'[Ll][Aa][Mm][Bb][Dd][Aa]'
+#     t.value = list(t.value)
+#     t.type = "LAMBDA"
+
+# Ignored characters
+t_ignore = " \r\n\t"
+t_ignore_COMMENT = r'\#.*'
+
+
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    # t.lexer.skip(1)
+    raise Exception('LEXER ERROR')
+
+
+lexer = lex.lex()
+## Test it out
+
+
+data = '''
+{ with {x 26} {* {+ x 20} {+ y 22}}};
+# '''
+data = '''
+((lambda x (* x x)) 4);
+'''
+data = '''
+FV[(lambda x (x y))];
+'''
+
+#
+# #
+## Give the lexer some input
+lexer.input(data)
+#
+## Tokenize
+while True:
+    tok = lexer.token()
+    if not tok:
+        break  # No more input
+    print(tok)
